@@ -88,8 +88,8 @@ function Get-ModuleConfig
             Write-Verbose "Parsing YAML configuration"
             $config = $content | ConvertFrom-Yaml -Ordered
 
-            # Ensure modules key exists
-            if (-not $config.ContainsKey('modules'))
+            # Ensure modules key exists (use Contains for OrderedDictionary compatibility)
+            if (-not $config.Contains('modules'))
             {
                 Write-Verbose "Configuration missing 'modules' key. Adding empty modules collection."
                 $config['modules'] = [ordered]@{}

@@ -14,7 +14,14 @@ BeforeAll {
 
     $script:moduleName = $ProjectName
 
-    # Dot source the public function and its dependencies
+    # Dot source the private helper functions that Initialize-PSSubtreeModule depends on
+    $privatePath = Join-Path -Path $projectPath -ChildPath 'source/Private'
+    . (Join-Path -Path $privatePath -ChildPath 'Get-SubtreeModulesYamlContent.ps1')
+    . (Join-Path -Path $privatePath -ChildPath 'Get-GitIgnoreContent.ps1')
+    . (Join-Path -Path $privatePath -ChildPath 'Get-ReadmeContent.ps1')
+    . (Join-Path -Path $privatePath -ChildPath 'Get-CheckUpdatesWorkflowContent.ps1')
+
+    # Dot source the public function
     $publicFunctionPath = Join-Path -Path $projectPath -ChildPath 'source/Public/Initialize-PSSubtreeModule.ps1'
     . $publicFunctionPath
 }

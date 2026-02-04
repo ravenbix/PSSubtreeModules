@@ -81,8 +81,8 @@ function Save-ModuleConfig
 
         try
         {
-            # Validate configuration structure
-            if (-not $Configuration.ContainsKey('modules'))
+            # Validate configuration structure (use Contains for OrderedDictionary compatibility)
+            if (-not $Configuration.Contains('modules'))
             {
                 Write-Verbose "Configuration missing 'modules' key. Adding empty modules collection."
                 $Configuration['modules'] = [ordered]@{}

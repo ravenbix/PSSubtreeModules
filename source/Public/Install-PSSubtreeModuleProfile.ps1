@@ -222,11 +222,11 @@ if (Test-Path -Path '$modulesPath') {
                 {
                     $existingContent = Get-Content -Path $ProfilePath -Raw -ErrorAction Stop
 
-                    if ($Force -and $existingContent -and $existingContent.Contains($markerStart))
+                    if ($Force -and $existingContent -and $existingContent.Contains('# PSSubtreeModules:'))
                     {
-                        # Remove existing entry when using -Force
+                        # Remove any existing PSSubtreeModules entry when using -Force
                         Write-Verbose "Removing existing PSSubtreeModules entry (Force mode)"
-                        $pattern = [regex]::Escape($markerStart) + '[\s\S]*?# End PSSubtreeModules\r?\n?'
+                        $pattern = '# PSSubtreeModules:[^\r\n]*[\s\S]*?# End PSSubtreeModules\r?\n?'
                         $existingContent = [regex]::Replace($existingContent, $pattern, '')
                     }
 

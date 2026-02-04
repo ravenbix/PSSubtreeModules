@@ -79,14 +79,28 @@ Describe 'Get-UpstreamInfo' -Tag 'Unit', 'Private' {
         }
 
         It 'Should use HEAD as default ref' {
+            # First call with --refs returns refs that don't match HEAD
+            # Second call (fallback) with HEAD returns the commit
             Mock -CommandName git -MockWith {
                 $global:LASTEXITCODE = 0
-                return "a1b2c3d4e5f6a1b2c3d4e5f6a1b2c3d4e5f6a1b2`tHEAD"
+                # Check if this is the --refs call or the direct HEAD call
+                if ($args -contains '--refs')
+                {
+                    # Return refs that don't match HEAD
+                    return "b2c3d4e5f6a1b2c3d4e5f6a1b2c3d4e5f6a1b2c3`trefs/heads/main"
+                }
+                else
+                {
+                    # Direct query returns HEAD commit
+                    return "a1b2c3d4e5f6a1b2c3d4e5f6a1b2c3d4e5f6a1b2`tHEAD"
+                }
             }
 
             $result = Get-UpstreamInfo -Repository 'https://github.com/owner/repo.git'
 
             $result | Should -Not -BeNullOrEmpty
+            $result.CommitHash | Should -Be 'a1b2c3d4e5f6a1b2c3d4e5f6a1b2c3d4e5f6a1b2'
+            # Verify the fallback query was made with HEAD
             Should -Invoke -CommandName git -Times 1 -Exactly -ParameterFilter { $args -contains 'HEAD' }
         }
 
