@@ -20,6 +20,7 @@
     Sampler                     = 'latest'
     'Sampler.GitHubTasks'       = 'latest'
     MarkdownLinkCheck           = 'latest'
+    'powershell-yaml'           = 'latest'
     'DscResource.Common'        = 'latest'
     'DscResource.Test'          = 'latest'
     'DscResource.AnalyzerRules' = 'latest'
