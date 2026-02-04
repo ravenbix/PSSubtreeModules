@@ -1,0 +1,69 @@
+{
+  "task_description": "Build PSSubtreeModules - a PowerShell module for managing module collections from GitHub using Git subtree",
+  "scoped_services": ["PSSubtreeModules"],
+  "files_to_create": {
+    "public_functions": [
+      "source/Public/Initialize-PSSubtreeModule.ps1",
+      "source/Public/Add-PSSubtreeModule.ps1",
+      "source/Public/Update-PSSubtreeModule.ps1",
+      "source/Public/Remove-PSSubtreeModule.ps1",
+      "source/Public/Get-PSSubtreeModule.ps1",
+      "source/Public/Get-PSSubtreeModuleStatus.ps1",
+      "source/Public/Test-PSSubtreeModuleDependency.ps1",
+      "source/Public/Install-PSSubtreeModuleProfile.ps1"
+    ],
+    "private_functions": [
+      "source/Private/Get-ModuleConfig.ps1",
+      "source/Private/Save-ModuleConfig.ps1",
+      "source/Private/Get-UpstreamInfo.ps1",
+      "source/Private/Get-SubtreeInfo.ps1",
+      "source/Private/Invoke-GitCommand.ps1"
+    ],
+    "unit_tests": [
+      "tests/Unit/Public/Initialize-PSSubtreeModule.Tests.ps1",
+      "tests/Unit/Public/Add-PSSubtreeModule.Tests.ps1",
+      "tests/Unit/Public/Update-PSSubtreeModule.Tests.ps1",
+      "tests/Unit/Public/Remove-PSSubtreeModule.Tests.ps1",
+      "tests/Unit/Public/Get-PSSubtreeModule.Tests.ps1",
+      "tests/Unit/Public/Get-PSSubtreeModuleStatus.Tests.ps1",
+      "tests/Unit/Public/Test-PSSubtreeModuleDependency.Tests.ps1",
+      "tests/Unit/Public/Install-PSSubtreeModuleProfile.Tests.ps1",
+      "tests/Unit/Private/Get-ModuleConfig.Tests.ps1",
+      "tests/Unit/Private/Save-ModuleConfig.Tests.ps1",
+      "tests/Unit/Private/Get-UpstreamInfo.Tests.ps1",
+      "tests/Unit/Private/Get-SubtreeInfo.Tests.ps1",
+      "tests/Unit/Private/Invoke-GitCommand.Tests.ps1"
+    ],
+    "integration_tests": [
+      "tests/Integration/FullWorkflow.Tests.ps1",
+      "tests/Integration/ProfileIntegration.Tests.ps1",
+      "tests/Integration/DependencyValidation.Tests.ps1"
+    ],
+    "infrastructure": [
+      ".github/workflows/ci.yml"
+    ]
+  },
+  "files_to_modify": [],
+  "files_to_reference": [],
+  "patterns": {
+    "function_structure": "Use begin/process/end blocks with [CmdletBinding(SupportsShouldProcess = $true)] for destructive operations",
+    "yaml_handling": "Always use -Ordered flag with ConvertFrom-Yaml to preserve key order",
+    "git_execution": "Use Invoke-GitCommand helper with 2>&1 redirection and $LASTEXITCODE checking",
+    "error_handling": "Throw descriptive errors with context, use Write-Verbose extensively",
+    "conventional_commits": "Format: feat(modules): <action> <name> [at/to <ref>]",
+    "parameter_validation": "[ValidateNotNullOrEmpty()] for required strings, [ValidateScript()] for complex validation",
+    "output_types": "[OutputType([PSCustomObject])] for functions returning objects"
+  },
+  "existing_implementations": {
+    "description": "Greenfield project - no existing implementations. Patterns to follow are defined in spec.md.",
+    "relevant_files": []
+  },
+  "key_decisions": {
+    "yaml_over_json": "YAML supports comments for documenting version pins",
+    "subtree_over_submodules": "Simpler workflow, files directly in repo, no recursive clone needed",
+    "squash_commits": "All subtree operations use --squash for clean history",
+    "explicit_dependencies": "No auto-resolution - each dependency must be added manually",
+    "manual_workflow_trigger": "GitHub Actions workflow uses workflow_dispatch only by default"
+  },
+  "created_at": "2026-02-04T04:45:00.000Z"
+}
