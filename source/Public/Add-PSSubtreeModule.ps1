@@ -183,7 +183,7 @@ function Add-PSSubtreeModule
                     '--squash'
                 )
 
-                $result = Invoke-GitCommand -Arguments $subtreeArgs -WorkingDirectory $resolvedPath
+                $null = Invoke-GitCommand -Arguments $subtreeArgs -WorkingDirectory $resolvedPath
                 Write-Verbose "Git subtree add completed successfully"
 
                 # Update the configuration

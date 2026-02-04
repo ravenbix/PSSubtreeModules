@@ -171,9 +171,6 @@ function Update-PSSubtreeModule
 
         Write-Verbose "Modules to update: $($modulesToUpdate -join ', ')"
 
-        # Track if config needs saving (only if ref changes)
-        $configChanged = $false
-
         # Update each module
         foreach ($moduleName in $modulesToUpdate)
         {
@@ -244,7 +241,6 @@ function Update-PSSubtreeModule
                     {
                         Write-Verbose "Updating ref in configuration from '$currentRef' to '$updateRef'"
                         $config.modules[$moduleName]['ref'] = $updateRef
-                        $configChanged = $true
                     }
 
                     # Create commit message

@@ -183,7 +183,7 @@ function Remove-PSSubtreeModule
                         $prefix
                     )
 
-                    $result = Invoke-GitCommand -Arguments $gitRmArgs -WorkingDirectory $resolvedPath
+                    $null = Invoke-GitCommand -Arguments $gitRmArgs -WorkingDirectory $resolvedPath
                     Write-Verbose "Git rm completed successfully"
                 }
                 else
